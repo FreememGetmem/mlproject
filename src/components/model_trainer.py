@@ -20,7 +20,7 @@ from src.utils import evaluate_models, save_object
 
 @dataclass
 class  ModeltrainerConfig:
-    trained_model_file_path = os.path.join("artifects", "model.pkl")
+    trained_model_file_path = os.path.join("artifacts", "model.pkl")
 
 class ModelTrainer:
     def __init__(self):
