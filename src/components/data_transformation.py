@@ -19,10 +19,6 @@ class DataTransformation:
         self.data_transformation_config = DataTransformationConfig()
     
     def get_data_transformer_object(self):
-        '''
-        This function si responsible for data trnasformation
-        
-        '''
         try:
             numerical_columns = ["writing_score", "reading_score"]
             categorical_columns = [
@@ -32,42 +28,34 @@ class DataTransformation:
                 "lunch",
                 "test_preparation_course",
             ]
-
-            num_pipeline= Pipeline(
+            num_pipeline = Pipeline(
                 steps=[
-                ("imputer",SimpleImputer(strategy="median")),
-                ("scaler",StandardScaler())
-
+                ('imputer', SimpleImputer(strategy='median')),
+                ('scaler', StandardScaler())
                 ]
             )
-
-            cat_pipeline=Pipeline(
-
+            cat_pipeline = Pipeline(
                 steps=[
-                ("imputer",SimpleImputer(strategy="most_frequent")),
-                ("one_hot_encoder",OneHotEncoder()),
-                ("scaler",StandardScaler(with_mean=False))
+                ('imputer', SimpleImputer(strategy='most_frequent')),
+                ('one_hot_encoder', OneHotEncoder()),
+                ("scaler", StandardScaler(with_mean=False))
                 ]
-
             )
-
-            logging.info(f"Categorical columns: {categorical_columns}")
+            
             logging.info(f"Numerical columns: {numerical_columns}")
+            logging.info(f"Categorical columns: {categorical_columns}")
 
-            preprocessor=ColumnTransformer(
+            logging.info("Data transformation pipeline created.")
+            preprocessor = ColumnTransformer(
                 [
-                ("num_pipeline",num_pipeline,numerical_columns),
-                ("cat_pipelines",cat_pipeline,categorical_columns)
-
+                    ('num_pipeline', num_pipeline, numerical_columns),
+                    ('cat_pipeline', cat_pipeline, categorical_columns)
                 ]
-
-
             )
-
             return preprocessor
         
         except Exception as e:
-            raise CustomException(e,sys)
+            raise CustomException(e, sys)
     
     def initiate_data_transformation(self, train_path, test_path):
         try:
